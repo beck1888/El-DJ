@@ -16,10 +16,12 @@ hide_settings = """
 # Hides the 'made with streamlit' message when hosting
 hide_made_with_s = """
             <style>
-            [data-testid="stToolbar"] {visibility: hidden !important;}
-            footer {visibility: hidden !important;}
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
             </style>
             """
+
+
 
 # Hides the text: 'press enter to submit' on forms, even though the function is still active
 hide_enter_to_submit = """

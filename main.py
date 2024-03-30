@@ -20,7 +20,7 @@ favicon = Image.open('favicon.webp')
 st.set_page_config(page_title="El DJ Español", page_icon=favicon)
 
 # Import and apply the custom styling configs
-page_configs = [remove_st_ui, hide_enter_to_submit]
+page_configs = [remove_st_ui, hide_enter_to_submit, hide_made_with_s]
 for custom_style in page_configs:
     st.markdown(custom_style, unsafe_allow_html=True)
 
