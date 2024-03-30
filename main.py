@@ -5,6 +5,14 @@ from PIL import Image  # Load the favicon
 from configs import *  # Custom page styles
 import time  # Show instructions only temporarily
 
+# Function for password checking w/ Streamlit secrets
+def is_correct_password(user_password):
+    password = st.secrets["modify_db_password"]
+    if user_password == password:
+        return True
+    else:
+        return False
+
 # Load favicon
 favicon = Image.open('favicon.webp')
 

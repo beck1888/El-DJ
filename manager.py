@@ -1,16 +1,14 @@
 import json
-import dotenv
 
 # Input fuzzing for title lookup
 def fuzz(some_text):
     return some_text # No longer using but keeping here due to many calls
-    some_text = str(some_text)
-    return_value = ''
-    for char in some_text:
-        if char in 'abcdefghijklmnopqrstuvwxyz':
-            return_value += char.lower()
-    return return_value
-
+    # some_text = str(some_text)
+    # return_value = ''
+    # for char in some_text:
+    #     if char in 'abcdefghijklmnopqrstuvwxyz':
+    #         return_value += char.lower()
+    # return return_value
 
 
 # Read songs into a python dict
@@ -36,10 +34,3 @@ def remove_song(user_title):
         return 'complete'
     else:
         return 'fail'
-
-# Check if the user add song password is right
-def is_correct_password(user_password):
-    if user_password == dotenv.get_key('.env', 'ADD_SONG_PASSWORD'): # Compare user input directly to the function getting the key
-        return True
-    else:
-        return False
