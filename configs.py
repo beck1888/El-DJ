@@ -36,3 +36,11 @@ remove_header = """
             header {visibility: hidden;}
             </style>
             """
+
+# Hides the orange/red/yellow bar at the top
+# BROKEN =(
+hide_decoration_bar_style = '''
+    <style>
+        header {visibility: hidden;}
+    </style>
+'''
