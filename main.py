@@ -1,9 +1,10 @@
-from manager import * # Interacts with the JSON songs file and validate pw
 import streamlit as st  # Streamlit website
 from random import choice  # Pick a random song from a list
 from PIL import Image  # Load the favicon
 from configs import *  # Custom page styles
 import time  # Show instructions only temporarily
+import gist_control # i/o for the gist api
+import json # Working with dicts
 
 # Function for password checking w/ Streamlit secrets
 def is_correct_password(user_password):
@@ -25,7 +26,7 @@ for custom_style in page_configs:
     st.markdown(custom_style, unsafe_allow_html=True)
 
 # Make a songs list based on the JSON file
-songs_dict = dict(get_songs())
+songs_dict = dict(gist_control.get_gist_content())
 songs = list(songs_dict.keys())
 
 # Check if a song has already been selected, if not, pick a random one
@@ -68,7 +69,7 @@ with st.form("Add a song to the list", clear_on_submit=True):
     user_password_guess = st.text_input("🔑 Contraseña", type='password')
     if st.form_submit_button('Agregar'):
         if is_correct_password(user_password_guess) is True:
-            add_song(user_input_title, user_input_url)
+            gist_control.update_gist(user_input_title, user_input_url)
             st.success("Canción agregada!", icon="✅")
             st.balloons()
         else:
@@ -78,11 +79,11 @@ with st.form("Add a song to the list", clear_on_submit=True):
 with st.form("remove_song", clear_on_submit=True):
     st.subheader("🗑️ Eliminar una canción de la lista")
 
-    song_name_pop = st.selectbox("🎵 Elige una canción para eliminar", list(get_songs()), index=None, placeholder="Haga clic en el menú desplegable o escriba aquí...")
+    song_name_pop = st.selectbox("🎵 Elige una canción para eliminar", list(gist_control.get_gist_content()), index=None, placeholder="Haga clic en el menú desplegable o escriba aquí...")
     user_password_guess = st.text_input("🔑 Contraseña", type='password')
     if st.form_submit_button("Remove song"):
         if is_correct_password(user_password_guess) is True:
-            remove_status = remove_song(song_name_pop)
+            remove_status = gist_control.remove_gist_key(song_name_pop)
             if remove_status == 'complete':
                 st.success("¡Canción eliminada!", icon="✅")
             else:
@@ -107,6 +108,6 @@ with open('songs.json', 'r') as download_file:
 
 # List all the songs in the playlist
 index = 1
-for song in get_songs():
+for song in gist_control.get_gist_content():
     st.text(f"{str(index)}) {song}")
     index += 1
